@@ -29,7 +29,6 @@ class Category
      *
      * @Assert\NotBlank()
      * @Assert\Length(min = "3")
-     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name = '';
