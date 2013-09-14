@@ -21,7 +21,8 @@
         "knplabs/knp-paginator-bundle": "2.3.2",
         "vich/uploader-bundle": "0.8.1",
         "avalanche123/imagine-bundle": "dev-master",
-        "liip/functional-test-bundle": "dev-master"
+        "liip/functional-test-bundle": "dev-master",
+        "DRicciardi/PortfolioBundle": "dev-master"
     },
     "suggest": {
         "doctrine/doctrine-fixtures-bundle": "required for functional testing",
@@ -32,5 +33,11 @@
             "Stfalcon\\Bundle\\PortfolioBundle": ""
         }
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/DRicciardi/PortfolioBundle"
+        }
+    ],
     "target-dir": "Stfalcon/Bundle/PortfolioBundle"
 }
