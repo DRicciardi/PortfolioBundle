@@ -22,7 +22,7 @@
         "vich/uploader-bundle": "0.8.1",
         "avalanche123/imagine-bundle": "dev-master",
         "liip/functional-test-bundle": "dev-master",
-        "DRicciardi/PortfolioBundle": "dev-master"
+        "stfalcon/portfolio-bundle": "dev-master"
     },
     "suggest": {
         "doctrine/doctrine-fixtures-bundle": "required for functional testing",
@@ -35,7 +35,7 @@
     },
     "repositories": [
         {
-            "type": "git",
+            "type": "vcs",
             "url": "https://github.com/DRicciardi/PortfolioBundle"
         }
     ],
