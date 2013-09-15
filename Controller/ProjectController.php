@@ -67,7 +67,7 @@ class ProjectController extends Controller
         // try find project by slug
         $project = $this->_findProjectBySlug($projectSlug);
 
-        $em = $this->get('doctrine')->getEntityManager();
+        $em = $this->get('doctrine')->getManager();
 
         // get all projects from this category
         $projects = $em->getRepository("StfalconPortfolioBundle:Project")
@@ -96,7 +96,7 @@ class ProjectController extends Controller
      */
     private function _findCategoryBySlug($slug)
     {
-        $em = $this->get('doctrine')->getEntityManager();
+        $em = $this->get('doctrine')->getManager();
         $category = $em->getRepository("StfalconPortfolioBundle:Category")
                 ->findOneBy(array('slug' => $slug));
 
@@ -116,7 +116,7 @@ class ProjectController extends Controller
      */
     private function _findProjectBySlug($slug)
     {
-        $em = $this->get('doctrine')->getEntityManager();
+        $em = $this->get('doctrine')->getManager();
         $project = $em->getRepository("StfalconPortfolioBundle:Project")
                 ->findOneBy(array('slug' => $slug));
 
