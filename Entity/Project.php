@@ -31,7 +31,7 @@ class Project
 
     /**
      * @var string $name
-     * 
+     *
      * @Assert\NotBlank()
      * @Assert\Length(min = "3")
      * @ORM\Column(name="name", type="string", length=255)
@@ -106,6 +106,25 @@ class Project
      */
     private $image;
 
+    /**
+     * @var File $thumbnailFile
+     *
+     * @Assert\File(
+     *     maxSize="4M",
+     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
+     * )
+     * @Vich\UploadableField(mapping="project_thumbnailImage", fileNameProperty="thumbnail")
+     */
+    protected $thumbnailFile;
+
+
+    /**
+     * @var string $thumbnail
+     *
+     * @ORM\Column(name="thumbnail", type="string", length=255, nullable=true)
+     */
+    private $thumbnail;
+    
     /**
      * @var int $ordernum
      *
@@ -346,6 +365,48 @@ class Project
         return false;
     }
 
+    
+    
+    /**
+     * Get image filename
+     *
+     * @return string
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * Set image and create thumbnail
+     *
+     * @param string $image Full path to image file
+     *
+     * @return void
+     */
+    public function setThumbnail($image)
+    {
+        $this->thumbnail = $image;
+    }
+
+    /**
+     * Remove thumbnail image file
+     *
+     * @return boolean
+     */
+    public function removeThumbnail()
+    {
+        if ($this->getThumbnailPath() && \file_exists($this->getThumbnailPath())) {
+            unlink($this->getThumbnailPath());
+
+            return true;
+        }
+
+        return false;
+    }
+    
+    
+    
     /**
      * Get list of users who worked on the project (as html)
      *
@@ -472,9 +533,7 @@ class Project
         $this->imageFile = $imageFile;
         $imagine = new Imagine\Gd\Imagine();
         $imagePath = $imagine->open($this->imageFile->getPathName());
-        $imagePath->thumbnail(new Imagine\Image\Box(240, $imagePath->getSize()->getHeight()), Imagine\Image\ImageInterface::THUMBNAIL_INSET)
-                ->crop(new Imagine\Image\Point(0, 0), new Imagine\Image\Box(240, 198))
-                ->save($this->imageFile->getPathName(), array('format' => 'png'));
+        $imagePath->save($this->imageFile->getPathName(), array('format' => 'png'));
 
         $this->setUpdated(new \DateTime());
     }
@@ -489,6 +548,41 @@ class Project
         return $this->imageFile;
     }
 
+    
+    
+    /**
+     * Set thumbnailFile
+     *
+     * @param File $imageFile
+     *
+     * @return void
+     */
+    public function setThumbnailFile($imageFile)
+    {
+        if (null === $imageFile) {
+            return;
+        }
+
+        $this->thumbnailFile = $imageFile;
+        $imagine = new Imagine\Gd\Imagine();
+        $imagePath = $imagine->open($this->thumbnailFile->getPathName());
+        $imagePath->save($this->thumbnailFile->getPathName(), array('format' => 'png'));
+
+        $this->setUpdated(new \DateTime());
+    }
+
+    /**
+     * Get thumbnailFile
+     *
+     * @return File
+     */
+    public function getThumbnailFile()
+    {
+        return $this->thumbnailFile;
+    }
+    
+    
+    
     /**
      * This method allows a class to decide how it will react when it is treated like a string
      *
